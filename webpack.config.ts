@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import type {Configuration as DevServerConfiguration} from 'webpack-dev-server';
 
 type Mode = 'production' | 'development';
@@ -12,13 +13,14 @@ interface IEnvVars {
 
 export default (env: IEnvVars) => {
   const isDev = env.mode === 'development';
+  const isProd = env.mode === 'production';
 
   const config: webpack.Configuration = {
     // берем окружение из env, если оно не указано - ставим dev
     mode: env.mode ?? 'development',
     // path.resolve склеивает участки пути, __dirname - текущая папка, src - папка, где лежит index.js
     // entry может быть несколько, указываются они как ключ: значение (entry: {entry1: path.resolve...} )
-    entry: path.resolve(__dirname, 'src', 'index.ts'),
+    entry: path.resolve(__dirname, 'src', 'index.tsx'),
     output: {
       path: path.resolve(__dirname, 'build'),
       // [] - позволяет создать динамичное название файла, больше в документации: https://webpack.js.org/configuration/output/#outputfilename
@@ -33,11 +35,27 @@ export default (env: IEnvVars) => {
         template: path.resolve(__dirname, 'public', 'index.html')
       }),
       // показывает процент прохождения сборки // в проде лучше не использовать, замедляет сборку
-      isDev && new webpack.ProgressPlugin()
+      isDev && new webpack.ProgressPlugin(),
+      isProd &&
+        new MiniCssExtractPlugin({
+          filename: 'css/[name].[contenthash:8].css',
+          chunkFilename: 'css/[name].[contenthash:8].css'
+        })
     ].filter(Boolean),
     module: {
       // тут указываются loader'ы
       rules: [
+        {
+          test: /\.s[ac]ss$/i,
+          use: [
+            // Creates `style` nodes from JS strings
+            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+            // Translates CSS into CommonJS
+            'css-loader',
+            // Compiles Sass to CSS
+            'sass-loader'
+          ]
+        },
         {
           test: /\.tsx?$/, // регулярка какие файлы обрабатываем
           use: 'ts-loader', // название loader'а
