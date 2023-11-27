@@ -1,5 +1,6 @@
 import {createRoot} from 'react-dom/client';
 import {App} from './app';
+import {Provider} from 'react-redux';
 
 const root = document.getElementById('root');
 
@@ -9,4 +10,8 @@ if (!root) {
 
 const container = createRoot(root);
 
-container.render(<App />);
+container.render(
+  // <Provider>
+  <App />
+  // </Provider>
+);
