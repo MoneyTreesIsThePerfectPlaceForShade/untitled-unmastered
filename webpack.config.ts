@@ -1,79 +1,26 @@
 import path from 'path';
 import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import type {Configuration as DevServerConfiguration} from 'webpack-dev-server';
-
-type Mode = 'production' | 'development';
+import {buildWebpack} from './webpack/build/buildWebpack';
+import {BuildMode, BuildPaths} from './webpack/build/types';
 
 interface IEnvVars {
-  mode: Mode;
+  mode: BuildMode;
   port: number;
 }
 
+// path.resolve склеивает участки пути, __dirname - текущая папка, src - папка, где лежит index.tsx
 export default (env: IEnvVars) => {
-  const isDev = env.mode === 'development';
-  const isProd = env.mode === 'production';
-
-  const config: webpack.Configuration = {
-    // берем окружение из env, если оно не указано - ставим dev
-    mode: env.mode ?? 'development',
-    // path.resolve склеивает участки пути, __dirname - текущая папка, src - папка, где лежит index.js
-    // entry может быть несколько, указываются они как ключ: значение (entry: {entry1: path.resolve...} )
+  const paths: BuildPaths = {
+    output: path.resolve(__dirname, 'build'),
     entry: path.resolve(__dirname, 'src', 'index.tsx'),
-    output: {
-      path: path.resolve(__dirname, 'build'),
-      // [] - позволяет создать динамичное название файла, больше в документации: https://webpack.js.org/configuration/output/#outputfilename
-      filename: '[name].[contenthash].js',
-      // будет отчищать папку build при каждой сборке, чтобы файлы не кэшировались
-      clean: true
-    },
-    // плагины
-    plugins: [
-      // нужен для React, он берет шаблон, который мы укажем и на его основе создает свой html в сборку
-      new HtmlWebpackPlugin({
-        template: path.resolve(__dirname, 'public', 'index.html')
-      }),
-      // показывает процент прохождения сборки // в проде лучше не использовать, замедляет сборку
-      isDev && new webpack.ProgressPlugin(),
-      isProd &&
-        new MiniCssExtractPlugin({
-          filename: 'css/[name].[contenthash:8].css',
-          chunkFilename: 'css/[name].[contenthash:8].css'
-        })
-    ].filter(Boolean),
-    module: {
-      // тут указываются loader'ы
-      rules: [
-        {
-          test: /\.s[ac]ss$/i,
-          use: [
-            // Creates `style` nodes from JS strings
-            isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
-            // Translates CSS into CommonJS
-            'css-loader',
-            // Compiles Sass to CSS
-            'sass-loader'
-          ]
-        },
-        {
-          test: /\.tsx?$/, // регулярка какие файлы обрабатываем
-          use: 'ts-loader', // название loader'а
-          exclude: /node_modules/ // что не нужно обрабатывать
-        }
-      ]
-    },
-    // нужны для импортов, чтобы не писать Component.tsx, а чтобы было Component
-    resolve: {
-      extensions: ['.tsx', '.ts', '.js']
-    },
-    devtool: isDev && 'inline-source-map',
-    devServer: isDev
-      ? {
-          port: env.port ?? 9000,
-          open: true
-        }
-      : undefined
+    html: path.resolve(__dirname, 'public', 'index.html')
   };
+
+  const config: webpack.Configuration = buildWebpack({
+    port: env.port ?? 9001,
+    mode: env.mode ?? 'development',
+    paths
+  });
+
   return config;
 };
