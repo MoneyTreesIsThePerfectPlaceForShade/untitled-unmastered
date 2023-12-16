@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack serve --open --env mode=development",
     "build:dev": "webpack --env mode=development",
-    "build:prod": "webpack --env mode=production"
+    "build:prod": "webpack --env mode=production",
+    "lint": "eslint -c .eslintrc.json --ext .js,.jsx,.ts,.tsx ./src",
+    "lint:fix": "npm run lint -- --fix"
   },
   "keywords": [],
   "author": "",
@@ -22,9 +24,12 @@
     "@typescript-eslint/parser": "^6.14.0",
     "css-loader": "^6.8.1",
     "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.0.1",
     "eslint-plugin-react": "^7.33.2",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
+    "prettier": "^3.1.1",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
@@ -37,6 +42,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
+    "classnames": "^2.3.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.1.3"

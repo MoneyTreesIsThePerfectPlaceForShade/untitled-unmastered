@@ -11,7 +11,8 @@ if (!root) {
 const container = createRoot(root);
 
 container.render(
-  // <Provider>
-  <App />
-  // </Provider>
+  // @ts-expect-error отложил до времен, когда закончу с настройкой
+  <Provider>
+    <App />
+  </Provider>
 );

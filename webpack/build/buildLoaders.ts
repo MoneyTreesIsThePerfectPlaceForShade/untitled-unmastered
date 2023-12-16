@@ -1,4 +1,4 @@
-import {ModuleOptions, ids} from 'webpack';
+import {ModuleOptions} from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import {BuildOptions} from './types';
 
