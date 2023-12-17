@@ -6,6 +6,7 @@ import {BuildMode, BuildPaths} from './webpack/build/types';
 interface IEnvVars {
   mode: BuildMode;
   port: number;
+  analyzer: boolean;
 }
 
 // path.resolve склеивает участки пути, __dirname - текущая папка, src - папка, где лежит index.tsx
@@ -19,7 +20,8 @@ export default (env: IEnvVars) => {
   const config: webpack.Configuration = buildWebpack({
     port: env.port ?? 9001,
     mode: env.mode ?? 'development',
-    paths
+    paths,
+    analyzer: env.analyzer
   });
 
   return config;
