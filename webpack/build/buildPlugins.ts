@@ -1,9 +1,9 @@
-import {Configuration} from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import {BuildOptions} from './types';
-import webpack from 'webpack';
+import webpack, {Configuration} from 'webpack';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
+
+import {BuildOptions} from './types';
 
 export function buildPlugins({mode, paths, analyzer}: BuildOptions): Configuration['plugins'] {
   const isDev = mode === 'development';
