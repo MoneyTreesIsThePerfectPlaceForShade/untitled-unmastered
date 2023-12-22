@@ -1,8 +1,13 @@
+import {useSelector} from 'react-redux';
 import {Link, Outlet} from 'react-router-dom';
 
 import styles from './App.module.scss';
+import {Store} from './store/types';
 
 export const App = () => {
+  const example = useSelector((state: Store) => state);
+  console.log(example);
+
   return (
     <div>
       <Link to={'/about'}>about</Link>

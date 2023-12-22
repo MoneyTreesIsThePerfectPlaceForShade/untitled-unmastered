@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
-import {App} from './app';
+import {App, store} from './app';
 import {About} from './pages';
 
 const root = document.getElementById('root');
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
 ]);
 
 container.render(
-  // <Provider>
-  <RouterProvider router={router} />
-  // </Provider>
+  <Provider store={store}>
+    <RouterProvider router={router} />
+  </Provider>
 );
