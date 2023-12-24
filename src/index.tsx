@@ -4,7 +4,7 @@ import {Provider} from 'react-redux';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
 import {App, store} from '@/app';
-import {About} from '@/pages';
+import {About, ErrorPage} from '@/pages';
 
 const root = document.getElementById('root');
 
@@ -35,6 +35,14 @@ const router = createBrowserRouter([
       {
         path: '/page2',
         element: <h1>PAGE 2</h1>
+      },
+      {
+        path: '*',
+        element: (
+          <Suspense fallback={'Loading...'}>
+            <ErrorPage />
+          </Suspense>
+        )
       }
     ]
   }
