@@ -3,8 +3,8 @@ import {createRoot} from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {createBrowserRouter, RouterProvider} from 'react-router-dom';
 
-import {App, store} from './app';
-import {About} from './pages';
+import {App, store} from '@/app';
+import {About} from '@/pages';
 
 const root = document.getElementById('root');
 
