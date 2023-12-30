@@ -1,6 +1,8 @@
 import {useSelector} from 'react-redux';
 import {Link, Outlet} from 'react-router-dom';
 
+import Icon from '@/shared/assets/icon.svg';
+
 import styles from './App.module.scss';
 import {Store} from './store/types';
 
@@ -18,6 +20,8 @@ export const App = () => {
       <br />
       <h1 className={styles.chocolatew}>Начало чего-то нового</h1>
       <span className={styles.value}>LETS CODE TONIGHT</span>
+      <br />
+      <Icon width={100} height={100} style={{color: 'purple'}} />
       {/* An <Outlet> should be used in parent route elements to render their child route elements.  */}
       <Outlet />
     </div>
