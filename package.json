@@ -8,6 +8,8 @@
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",
     "build:prodAnalyzer": "npm run build:prod -- --env analyzer=true",
+    "build:mobile": "webpack --env mode=production --env platform=mobile",
+    "build:desktop": "webpack --env mode=production --env platform=desktop",
     "lint": "eslint -c .eslintrc.json --ext .js,.jsx,.ts,.tsx ./src",
     "lint:fix": "npm run lint -- --fix"
   },

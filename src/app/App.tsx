@@ -8,10 +8,17 @@ import {Store} from './store/types';
 
 export const App = () => {
   const example = useSelector((state: Store) => state);
+  // TODO: пока идёт настройка всего и вся, оставлю, потом удалить
   console.log(example);
+
+  const s = __PLATFORM__ === 'desktop' ? <div>ISSA DESKTOP</div> : '';
+  const d = __PLATFORM__ === 'mobile' ? <div>ISSA MOBILE</div> : '';
 
   return (
     <div>
+      <h1>{s}</h1>
+      <h1>{d}</h1>
+      <h1>{__ENV__}</h1>
       <Link to={'/about'}>about</Link>
       <br />
       <Link to={'/page1'}>page1</Link>
