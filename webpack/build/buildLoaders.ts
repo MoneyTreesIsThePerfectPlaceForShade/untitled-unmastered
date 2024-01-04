@@ -2,6 +2,7 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import ReactRefreshTypeScript from 'react-refresh-typescript';
 import {ModuleOptions} from 'webpack';
 
+import {buildBabelLoader} from './babel/buildBabelLoader';
 import {BuildOptions} from './types';
 
 export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
@@ -73,20 +74,7 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
   };
 
   // возможно в будущем вынесу в babel.config.json для jest'а
-  const babelLoader = {
-    test: /\.tsx?$/, // регулярка какие файлы обрабатываем
-    exclude: /node_modules/,
-    use: {
-      loader: 'babel-loader',
-      options: {
-        presets: [
-          '@babel/preset-env',
-          '@babel/preset-typescript',
-          ['@babel/preset-react', {runtime: isDev ? 'automatic' : 'classic'}]
-        ]
-      }
-    }
-  };
+  const babelLoader = buildBabelLoader(options);
 
   return [assetLoader, svgrLoader, scssLoader, babelLoader];
 }

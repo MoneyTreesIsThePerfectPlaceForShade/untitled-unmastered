@@ -21,7 +21,7 @@ export const App = () => {
   const res = fun(10);
 
   return (
-    <div>
+    <div data-testid={'Main-data-testid'}>
       <h1>{s}</h1>
       <h1>{res}</h1>
       <h1>{d}</h1>
