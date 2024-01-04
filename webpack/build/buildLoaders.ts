@@ -72,5 +72,21 @@ export function buildLoaders(options: BuildOptions): ModuleOptions['rules'] {
     exclude: /node_modules/ // что не нужно обрабатывать
   };
 
-  return [assetLoader, svgrLoader, scssLoader, tsLoader];
+  // возможно в будущем вынесу в babel.config.json для jest'а
+  const babelLoader = {
+    test: /\.tsx?$/, // регулярка какие файлы обрабатываем
+    exclude: /node_modules/,
+    use: {
+      loader: 'babel-loader',
+      options: {
+        presets: [
+          '@babel/preset-env',
+          '@babel/preset-typescript',
+          ['@babel/preset-react', {runtime: isDev ? 'automatic' : 'classic'}]
+        ]
+      }
+    }
+  };
+
+  return [assetLoader, svgrLoader, scssLoader, babelLoader];
 }
