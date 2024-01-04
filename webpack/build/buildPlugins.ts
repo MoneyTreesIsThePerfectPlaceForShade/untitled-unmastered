@@ -1,5 +1,9 @@
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import path from 'path';
 import webpack, {Configuration, DefinePlugin} from 'webpack';
 import {BundleAnalyzerPlugin} from 'webpack-bundle-analyzer';
 
@@ -12,7 +16,8 @@ export function buildPlugins({mode, paths, analyzer, platform}: BuildOptions): C
   const plugins: Configuration['plugins'] = [
     // нужен для React, он берет шаблон, который мы укажем и на его основе создает свой html в сборку
     new HtmlWebpackPlugin({
-      template: paths.html
+      template: paths.html,
+      favicon: path.resolve(paths.public, 'favicon.ico')
     }),
     // что-то в духе создания переменных окружения, порой очень полезная штука
     new DefinePlugin({
@@ -26,6 +31,14 @@ export function buildPlugins({mode, paths, analyzer, platform}: BuildOptions): C
       // показывает процент прохождения сборки // в проде лучше не использовать, замедляет сборку
       new webpack.ProgressPlugin()
     );
+    plugins.push(
+      // проверяет типы отдельно, вне билда
+      new ForkTsCheckerWebpackPlugin()
+    );
+    plugins.push(
+      // для HMR
+      new ReactRefreshWebpackPlugin()
+    );
   }
 
   if (isProd) {
@@ -34,6 +47,12 @@ export function buildPlugins({mode, paths, analyzer, platform}: BuildOptions): C
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css',
         chunkFilename: 'css/[name].[contenthash:8].css'
+      })
+    );
+    plugins.push(
+      new CopyPlugin({
+        // копируем файлы локализации в сборку
+        patterns: [{from: path.resolve(paths.public, 'locales'), to: path.resolve(paths.output, 'locales')}]
       })
     );
   }

@@ -14,9 +14,16 @@ export const App = () => {
   const s = __PLATFORM__ === 'desktop' ? <div>ISSA DESKTOP</div> : '';
   const d = __PLATFORM__ === 'mobile' ? <div>ISSA MOBILE</div> : '';
 
+  const fun = (a: number): number => {
+    return a * 2;
+  };
+
+  const res = fun(10);
+
   return (
     <div>
       <h1>{s}</h1>
+      <h1>{res}</h1>
       <h1>{d}</h1>
       <h1>{__ENV__}</h1>
       <Link to={'/about'}>about</Link>
@@ -28,7 +35,7 @@ export const App = () => {
       <h1 className={styles.chocolatew}>Начало чего-то нового</h1>
       <span className={styles.value}>LETS CODE TONIGHT</span>
       <br />
-      <Icon width={100} height={100} style={{color: 'purple'}} />
+      <Icon width={100} height={100} style={{color: 'green'}} />
       {/* An <Outlet> should be used in parent route elements to render their child route elements.  */}
       <Outlet />
     </div>

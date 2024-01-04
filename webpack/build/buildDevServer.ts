@@ -10,6 +10,7 @@ export function buildDevServer(options: BuildOptions): DevServerConfiguration {
     // работает только для devServer
     // если раздавать статику через nginx, то надо делать проксирование на Index.html
     // https://www.youtube.com/watch?v=8OHe6chCWTE&ab_channel=UlbiTV
-    historyApiFallback: true
+    historyApiFallback: true,
+    hot: true
   };
 }
