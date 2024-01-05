@@ -1,5 +1,5 @@
 export type Store = {
-  example: {
+  exampleSlice: {
     example: [];
   };
 };
