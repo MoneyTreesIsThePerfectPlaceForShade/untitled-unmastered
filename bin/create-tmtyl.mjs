@@ -28,16 +28,16 @@ try {
 
 async function main() {
   try {
-    console.log('Downloading files...');
+    console.log('Processing...');
 
     process.chdir(projectPath);
     execSync(`git clone --depth 1 ${git_repo}`);
 
-    fs.rmSync(`${projectPath}/bin`);
+    fs.rmSync(`${projectPath}\\untitled-unmastered\\bin`, {recursive: true, force: true});
 
     console.log('Now type "npm i" to install deps');
 
-    console.log('The installation is done, this is ready to use !');
+    console.log('The installation is done, create your own world!');
   } catch (error) {
     console.log(error);
   }
