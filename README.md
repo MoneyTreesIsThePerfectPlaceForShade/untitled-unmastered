@@ -25,3 +25,7 @@
 - Настроенный ESLint (с плагинами для TS, React и Prettier) и Prettier;
 - Настроенный Webpack (с настроенными alias в виде `@`) и Babel (с самописным плагином для удаления `data-testid`);
 - Jest и React-Testing-Library для тестирования.
+
+## Как использовать
+
+`npx create-tmtyl *project name*`
