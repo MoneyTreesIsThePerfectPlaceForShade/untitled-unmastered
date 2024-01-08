@@ -4,7 +4,7 @@
   "description": "Untitled Unmastered is template for React-Redux project with scss and FSD",
   "main": "index.tsx",
   "bin": {
-    "create-tmtyl": "./bin/create-tmtyl.ts"
+    "create-tmtyl": "./bin/create-tmtyl.mjs"
   },
   "scripts": {
     "start": "webpack serve --open --env mode=development",
