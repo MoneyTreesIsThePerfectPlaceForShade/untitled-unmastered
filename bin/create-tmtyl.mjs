@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import {execSync} from 'child_process';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
 
 if (process.argv.length < 3) {
   console.log('Name your app');
@@ -33,10 +33,9 @@ async function main() {
     process.chdir(projectPath);
     execSync(`git clone --depth 1 ${git_repo}`);
 
-    console.log('Installing dependencies...');
-    execSync('npm install');
+    fs.rmSync(`${projectPath}/bin`);
 
-    fs.rmSync('./bin')
+    console.log('Now type "npm i" to install deps');
 
     console.log('The installation is done, this is ready to use !');
   } catch (error) {
