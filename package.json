@@ -1,7 +1,7 @@
 {
   "name": "untitled-unmastered",
-  "version": "1.1.1",
-  "description": "Untitled Unmastered is template for React-Redux project with scss and FSD",
+  "version": "2.0.0",
+  "description": "Untitled Unmastered is template for React-Redux project with SCSS and FSD",
   "main": "index.tsx",
   "bin": {
     "create-tmtyl": "./bin/create-tmtyl.mjs"
